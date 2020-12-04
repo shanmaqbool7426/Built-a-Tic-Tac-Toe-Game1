@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>TICTACTOE</title>
+    <style>
+        td {
+            width: 100px;
+            height: 100px;
+            background: rgb(187, 186, 186);
+            font-size: 40px;
+            text-align: center;
+            border-radius: 10px;
+        }
+
+        table {
+            margin: 20px auto;
+            border-radius: 10px;
+            color: white;
+        }
+
+        body {
+background-color: rgba(24, 104, 55, 0.856);        }
+
+        #btn {
+            padding: 2% 3%;
+            background-color:rgb(30, 53, 82);
+            font-weight: bolder;
+            border-radius: 7%;
+            color: white;
+
+        }
+        #btn:hover {
+background-color: black;
+color: white;
+        }
+
+        #last{
+            text-align: center;
+          
+        }
+        #target{
+            text-align: center;
+            color: white;
+        }
+        .con{
+            display: flex;
+            justify-content: center;
+        }
+    </style>
+</head>
+
+<body onload="animate_string('target')">
+    <h1>
+        <pre id="target">TIC TAC TOE  </pre>
+    </h1>
+    <h1 id="player">
+        <center style="color: white;">lets play</center>
+    </h1>
+    <h2 id="last"></h2>
+    <table>
+
+        <tr>
+            <td id="r1" onclick="printx('1')"></td>
+            <td id="r2" onclick="printx('2')"></td>
+            <td id="r3" onclick="printx('3')"></td>
+        </tr>
+        <tr>
+            <td id="r4" onclick="printx('4')"></td>
+            <td id="r5" onclick="printx('5')"></td>
+            <td id="r6" onclick="printx('6')"></td>
+        </tr>
+        <tr>
+            <td id="r7" onclick="printx('7')"></td>
+            <td id="r8" onclick="printx('8')"></td>
+            <td id="r9" onclick="printx('9')"></td>
+        </tr>
+
+    </table>
+    <div class="con">
+        <input type="button" value="Reset" onclick="reset()" id="btn">
+    </div>
+    <script>
+        let sign = "x";
+        let disp = document.getElementById("player");
+        let isko;
+
+
+        function printx(number) {
+            document.getElementById("r" + number).style.color="black";
+
+            let isko = document.getElementById("r" + number);
+
+            console.log(isko);
+
+            if (isko.innerText == "") {
+                isko.innerText = sign;
+                winner();
+                checksign();
+                disp.innerHTML = "<center>" + sign + "  of turn" + "</center>";
+                disp.style.color='white';
+
+            }
+
+
+        }
+        function animate_string(id) {
+            var element = document.getElementById(id);
+            var textNode = element.childNodes[0]; // assuming no other children
+            var text = textNode.data;
+
+            setInterval(function () {
+                text = text[text.length - 1] + text.substring(0, text.length - 1);
+                textNode.data = text;
+            }, 800);
+        }
+        function checksign() {
+            if (sign == "x") sign = "o";
+            else sign = "x";
+
+        }
+        function getbox(no) {
+            return document.getElementById("r" + no).innerHTML;
+        }
+        function checkmove(a, b, c, m) {
+            if (getbox(a) == m && getbox(b) == m && getbox(c) == m)
+                return true;
+            else return false;
+        }
+
+        function winner() {
+            if (checkmove(1, 2, 3, sign) || checkmove(4, 5, 6, sign) || checkmove(7, 8, 9, sign)
+                || checkmove(1, 4, 7, sign) || checkmove(2, 5, 8, sign) || checkmove(3, 6, 9, sign)
+                || checkmove(1, 5, 9, sign) || checkmove(7, 5, 3, sign)) {
+                    document.getElementById("last").style.color="white";
+                    document.getElementById("last").innerText=sign+"   winerd";
+                disp.innerHTML = "<center>" + sign + " winer" + "</center>";
+                disp.style.color='white'
+              
+            } else {
+                if (getbox(1) != "" && getbox(2) != "" && getbox(3) != "" &&
+                    getbox(4) != "" && getbox(5) != "" && getbox(6) != "" &&
+                    getbox(7) != "" && getbox(8) != "" && getbox(9) != "") {
+                        document.getElementById("last").innerText="tie";
+
+                        // disp.innerHTML = "<center> its a tie </center>";    
+                        for (let i = 1; i <= 9; i++) {
+                document.getElementById("r" + i).innerHTML = "";
+
+            }           
+                }
+            }
+        }
+        function reset() {
+            for (let i = 1; i <= 9; i++) {
+                document.getElementById("r" + i).innerHTML = "";
+                document.getElementById("last").innerText="";
+
+            }
+        }
+    </script>
+</body>
+
+</html>
